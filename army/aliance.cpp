@@ -5,9 +5,9 @@ AlianceInfantry::AlianceInfantry() :
 {}
 
 AlianceDistance::AlianceDistance() :
-	Distance("Mag", 300, 300);
+	Distance("Mag", 300, 300)
 {}
 
 AlianceSpecial::AlianceSpecial() :
-	Special("Griphone")
+	Special("Griphone", attack_type::DISTANCE, 500, 600)
 {}

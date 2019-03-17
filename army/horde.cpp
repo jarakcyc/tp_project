@@ -5,9 +5,9 @@ HordeInfantry::HordeInfantry() :
 {}
 
 HordeDistance::HordeDistance() :
-	Distance("Warlock", 200, 200);
+	Distance("Warlock", 200, 200)
 {}
 
 HordeSpecial::HordeSpecial() :
-	Special("Dragon", attack_type::DISTANCE, 800, 400);
+	Special("Dragon", attack_type::DISTANCE, 800, 400)
 {}
