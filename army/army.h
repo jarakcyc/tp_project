@@ -1,64 +1,33 @@
 #pragma once
+#include <string>
+
+using namespace std;
 
 class Warrior {
 public:
 	Warrior() = default;
-	~Warrior() = default;
+	Warrior(string _name, int _health, int _attack, int _cost);
+	void info();
+	string name;
 	int health;
 	int attack;
 	int cost;
-}
+};
 
 class Infantry : public Warrior {
 public:
-	Infantry();
-	~Infantry();
-}
-
-class AlianceInfantry : public Infantry {
-public:
-	HordeInfantry();
-	~HordeInfantry();
-}
-
-class HordeInfantry : public Infantry {
-public:
-	HordeInfantry();
-	~HordeInfantry();
-}
+	Infantry() = default;
+	Infantry(string _name, int _health, int _attack, int _cost);
+};
 
 class Mag : public Warrior {
 public:
 	Mag();
-	~Mag();
-}
-
-class AlianceMag : public Infantry {
-public:
-	HordeInfantry();
-	~HordeInfantry();
-}
-
-class HordeMag : public Infantry {
-public:
-	HordeInfantry();
-	~HordeInfantry();
-}
+	Mag(string _name, int _health, int _attack, int _cost);
+};
 
 class Special : public Warrior {
 public: 
 	Special();
-	~Special();
-}
-
-class AlianceSpecial : public Infantry {
-public:
-	HordeInfantry();
-	~HordeInfantry();
-}
-
-class HordeSpecial : public Infantry {
-public:
-	HordeInfantry();
-	~HordeInfantry();
-}
+	Special(string _name, int _health, int _attack, int _cost);
+};
