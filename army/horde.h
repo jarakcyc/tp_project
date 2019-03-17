@@ -1,16 +1,17 @@
+#pragma once
 #include "army.h"
 
 class HordeInfantry : public Infantry {
 public:
-	HordeInfantry() = default;
+	HordeInfantry();
 };
 
-class HordeMag : public Mag {
+class HordeDistance : public Distance {
 public:
-	HordeInfantry();
+	HordeDistance();
 };
 
 class HordeSpecial : public Special {
 public:
-	HordeInfantry();
+	HordeSpecial();
 };

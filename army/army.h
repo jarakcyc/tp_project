@@ -4,13 +4,13 @@
 using namespace std;
 
 enum attack_type {
-	CLOSE
+	CLOSE,
 	DISTANCE
-}
+};
 
 class Warrior {
 public:
-	Warrior() = default;
+	Warrior();
 	Warrior(string _name, attack_type _type, int _health, int _damage, int _cost);
 	void info();
 	string name;
@@ -22,18 +22,15 @@ public:
 
 class Infantry : public Warrior {
 public:
-	Infantry() = default;
-	Infantry(string _name, int _health, int _attack, int _cost);
+	Infantry(string _name, int _health, int _damage);
 };
 
-class Mag : public Warrior {
+class Distance : public Warrior {
 public:
-	Mag();
-	Mag(string _name, int _health, int _attack, int _cost);
+	Distance(string _name, int _health, int _damage);
 };
 
 class Special : public Warrior {
 public: 
-	Special();
-	Special(string _name, int _health, int _attack, int _cost);
+	Special(string _name, attack_type _type, int _health, int _damage);
 };
