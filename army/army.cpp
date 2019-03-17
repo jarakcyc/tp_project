@@ -4,10 +4,11 @@
 
 using namespace std;
 
-Warrior::Warrior(string _name, int _health, int _attack, int _cost) :
+Warrior::Warrior(string _name, attack_type, _type, int _health, int _damage, int _cost) :
 	name(_name),
+	type(_type),
 	health(_health),
-	attack(_attack),
+	damage(_damage),
 	cost(_cost)
 {}
 
