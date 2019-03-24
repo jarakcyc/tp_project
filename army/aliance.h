@@ -1,17 +1,18 @@
 #pragma once
 #include "army.h"
 
-class AlianceInfantry : public Infantry {
+class Soldier : public Infantry {
 public:
-	AlianceInfantry();
+    Soldier();
 };
 
-class AlianceDistance : public Distance {
+class Mag : public Distance {
 public:
-	AlianceDistance();
+    Mag();
 };
 
-class AlianceSpecial : public Special {
+class AlianceArmyFactory : public ArmyFactory {
 public:
-	AlianceSpecial();
+    Infantry* create_infantry(const string _name) override;
+    Distance* create_distance(const string _name) override;
 };
