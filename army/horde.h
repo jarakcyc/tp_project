@@ -1,17 +1,18 @@
 #pragma once
 #include "army.h"
 
-class HordeInfantry : public Infantry {
+class Orc : public Infantry {
 public:
-	HordeInfantry();
+    Orc();
 };
 
-class HordeDistance : public Distance {
+class Warlock : public Distance {
 public:
-	HordeDistance();
+    Warlock();
 };
 
-class HordeSpecial : public Special {
+class HordeArmyFactory : public ArmyFactory {
 public:
-	HordeSpecial();
+    Infantry* create_infantry(const string _name) override;
+    Distance* create_distance(const string _name) override;
 };
