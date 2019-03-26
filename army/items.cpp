@@ -16,7 +16,7 @@ void Item::info() const {
     cout << "item_id: " << item_id << endl;
     cout << "type: ";
     if (type == item_type::WEAPON) {
-        cout << "weapon" << endl;
+        cout << "Weapon" << endl;
     } else {
         cout << "Accessory" << endl;
     }
@@ -35,26 +35,49 @@ Accessory::Accessory(Hero* _owner, const int _id, const string _name, const stri
 
 // Warmace of Menethil
 Warmace::Warmace(Hero* _owner):
-    Weapon(_owner, 1, "Warmace of Menethil", "damage bonus +200, health bonus +100")
+    Weapon(_owner, 1, "Warmace of Menethil", "damage bonus +200, health bonus +500")
 {
     const_effect();
 }
 
+Warmace::~Warmace() {
+    rm_const_effect();
+}
+
 void Warmace::const_effect() {
     owner->damage += 200;
-    owner->health += 100;
-    owner->max_health += 100;
+    owner->health += 500;
+    owner->max_health += 500;
 }
 
 void Warmace::rm_const_effect() {
     owner->damage -= 200;
-    owner->max_health -= 100;
+    owner->max_health -= 500;
     owner->health = min(owner->health, owner->max_health);
+}
+
+//Shadowmourne
+Shadowmourne::Shadowmourne(Hero* _owner) :
+    Weapon(_owner, 2, "Shadowmourne", "damage bonus + 500")
+{
+    const_effect();
+}
+
+Shadowmourne::~Shadowmourne() {
+    rm_const_effect();
+}
+
+void Shadowmourne::const_effect() {
+    owner->damage += 500;
+}
+
+void Shadowmourne::rm_const_effect() {
+    owner->damage -= 500;
 }
 
 //Deathbringer's Will
 DeathbringersWill::DeathbringersWill(Hero* _owner):
-    Accessory(_owner, 2, "Deathbringer's Will", "damage bonus +500 in battle")
+    Accessory(_owner, 3, "Deathbringer's Will", "damage bonus +500 in battle")
 {}
 
 void DeathbringersWill::time_effect() {
@@ -63,4 +86,13 @@ void DeathbringersWill::time_effect() {
 
 void DeathbringersWill::rm_time_effect() {
     owner->damage -= 500;
+}
+
+//Flask
+Flask::Flask(Hero* _owner) :
+    Accessory(_owner, 4, "Flask of Professor Putricide", "heal effect +100")
+{}
+
+void Flask::time_effect() {
+    owner->health = min(owner->max_health, owner->health + 100);
 }

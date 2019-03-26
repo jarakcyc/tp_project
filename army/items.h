@@ -42,16 +42,34 @@ public:
 };
 
 
-class Warmace : public Weapon {
+class Warmace : public Weapon { // id = 1, damage bonus +200, health bonus +500
 public:
     Warmace(Hero* _owner);
+    ~Warmace();
     void const_effect() override;
     void rm_const_effect() override;
 };
 
-class DeathbringersWill : public Accessory {
+class Shadowmourne : public Weapon { // id = 2, damage bonus + 500
+public:
+    Shadowmourne(Hero* _owner);
+    ~Shadowmourne();
+    void const_effect() override;
+    void rm_const_effect() override;
+};
+
+class DeathbringersWill : public Accessory { // id = 3, damage bonus +500 in battle
 public:
     DeathbringersWill(Hero* _owner);
+    ~DeathbringersWill() {};
     void time_effect() override;
     void rm_time_effect() override;
+};
+
+class Flask : public Accessory { // id = 4, heal effect +100
+public:
+    Flask(Hero* _owner);
+    ~Flask() {};
+    void time_effect() override;
+    void rm_time_effect() override {};
 };

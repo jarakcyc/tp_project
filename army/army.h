@@ -36,18 +36,34 @@ public:
     Distance(string _name, int _health, int _damage);
 };
 
-class ArmyFactory {
-public:
-    virtual ~ArmyFactory() {};
-    virtual Infantry* create_infantry(string name) = 0;
-    virtual Distance* create_distance(string name) = 0;
-};
-
 class Hero : public Warrior {
 public:
     Hero(string _name, int _health, int _damage);
     ~Hero();
+    const int max_weapon = 1;
+    const int max_accessory = 1;
     void add_item(const int _id);
     void remove_item(const int _id);
     vector<Item*> items;
+};
+
+class ArmyFactory {
+public:
+    virtual ~ArmyFactory() {};
+    virtual Infantry* create_infantry(const string _name) = 0;
+    virtual Distance* create_distance(const string _name) = 0;
+    virtual Hero* create_hero(const string _name) = 0;
+};
+
+class Army {
+public:
+    ~Army();
+
+    vector<Infantry*> infantry;
+    vector<Distance*> distance;
+    vector<Hero*> hero;
+
+    void add_infantry(ArmyFactory* factory, const string _name);
+    void add_distance(ArmyFactory* factory, const string _name);
+    void add_hero(ArmyFactory* factory, const string _name);
 };

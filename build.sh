@@ -5,3 +5,5 @@ cd tmp
 
 cmake "~/dimas/project"
 make
+
+#./tests
