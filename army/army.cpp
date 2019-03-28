@@ -38,35 +38,39 @@ Hero::~Hero() {
     }
 }
 
-void Hero::add_item(const int _id) {
+void HeroBuilder::set_hero(Hero* _hero) {
+    hero = _hero;
+}
+
+void HeroBuilder::add_item(const int _id) {
     Item* ptr = nullptr;
     if (_id == 1) {
-        ptr = new Warmace(this);
+        ptr = new Warmace(hero);
     } else if (_id == 2) {
-        ptr = new Shadowmourne(this);
+        ptr = new Shadowmourne(hero);
     } else if (_id == 3) {
-        ptr = new DeathbringersWill(this);
+        ptr = new DeathbringersWill(hero);
     } else if (_id == 4) {
-        ptr = new Flask(this);
+        ptr = new Flask(hero);
     }
 
     if (ptr == nullptr) {
         cout << "no such item" << endl;
     } else {
         int cnt = 0;
-        for (Item* it : items) {
+        for (Item* it : hero->items) {
             if (ptr->type == it->type) {
                 cnt++;
             }
         }
         int max_can = 0;
         if (ptr->type == item_type::WEAPON) {
-            max_can = max_weapon;
+            max_can = hero->max_weapon;
         } else if (ptr->type == item_type::ACCESSORY) {
-            max_can = max_accessory;
+            max_can = hero->max_accessory;
         }
         if (cnt < max_can) {
-            items.push_back(ptr);
+            hero->items.push_back(ptr);
             //cout << "added item: " << endl;
             //ptr->info();
         } else {
@@ -76,11 +80,11 @@ void Hero::add_item(const int _id) {
     }
 }
 
-void Hero::remove_item(const int _id) {
-    for (int i = 0; i < (int)items.size(); ++i) {
-        if (items[i]->item_id == _id) {
-            delete items[i];
-            items.erase(items.begin() + i);
+void HeroBuilder::remove_item(const int _id) {
+    for (int i = 0; i < (int)hero->items.size(); ++i) {
+        if (hero->items[i]->item_id == _id) {
+            delete hero->items[i];
+            hero->items.erase(hero->items.begin() + i);
             break;
         }
     }

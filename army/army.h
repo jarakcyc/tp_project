@@ -42,9 +42,16 @@ public:
     ~Hero();
     const int max_weapon = 1;
     const int max_accessory = 1;
+    vector<Item*> items;
+};
+
+class HeroBuilder {
+public:
+    Hero* hero;
+
+    void set_hero(Hero* _hero);
     void add_item(const int _id);
     void remove_item(const int _id);
-    vector<Item*> items;
 };
 
 class ArmyFactory {

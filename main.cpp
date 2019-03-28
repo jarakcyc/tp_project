@@ -6,6 +6,8 @@
 
 using namespace std;
 
+HeroBuilder builder;
+
 void make_step(const string& command, ArmyFactory* factory, Army* army) {
     if (command == "create") {
         string type, name;
@@ -31,9 +33,10 @@ void make_step(const string& command, ArmyFactory* factory, Army* army) {
         cin >> name;
         for (int i = 0; i < (int)army->hero.size(); ++i) {
             if (army->hero[i]->name == name) {
+                builder.set_hero(army->hero[i]);
                 int id;
                 cin >> id;
-                army->hero[i]->add_item(id);
+                builder.add_item(id);
                 return;
             }
         }
@@ -44,9 +47,10 @@ void make_step(const string& command, ArmyFactory* factory, Army* army) {
         cin >> name;
         for (int i = 0; i < (int)army->hero.size(); ++i) {
             if (army->hero[i]->name == name) {
+                builder.set_hero(army->hero[i]);
                 int id;
                 cin >> id;
-                army->hero[i]->remove_item(id);
+                builder.remove_item(id);
                 return;
             }
         }

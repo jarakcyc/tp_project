@@ -155,22 +155,24 @@ TEST(ALIANCE, class_ArmyFactory_create_infantry_test) {
     delete factory;
 }
 
-TEST(ITEMS, test_all) {
+TEST(HERO_BUILDER, test_adding_items) {
+    HeroBuilder builder;
     Hero* hero = new Hero("test", 0, 0);
-    hero->add_item(1);
+    builder.set_hero(hero);
+    builder.add_item(1);
     ASSERT_EQ(hero->damage, 200);
     ASSERT_EQ(hero->health, 500);
     ASSERT_EQ(hero->max_health, 500);
-    hero->remove_item(1);
+    builder.remove_item(1);
     ASSERT_EQ(hero->damage, 0);
     ASSERT_EQ(hero->health, 0);
     ASSERT_EQ(hero->max_health, 0);
     ASSERT_EQ((int)hero->items.size(), 0);
-    hero->add_item(2);
+    builder.add_item(2);
     ASSERT_EQ(hero->damage, 500);
     ASSERT_EQ(hero->health, 0);
     ASSERT_EQ(hero->max_health, 0);
-    hero->add_item(3);
+    builder.add_item(3);
     ASSERT_EQ((int)hero->items.size(), 2);
     delete hero;
 }
