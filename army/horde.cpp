@@ -19,14 +19,6 @@ Shaman::Shaman() :
     Distance("Shaman", 300, 300)
 {}
 
-Thrall::Thrall():
-    Hero("Thrall", 1000, 400)
-{}
-
-Zuljin::Zuljin():
-    Hero("Zuljin", 800, 600)
-{}
-
 Infantry* HordeArmyFactory::create_infantry(const string _name) {
     Infantry* unit = nullptr;
     if (_name == "Orc") {
@@ -37,9 +29,6 @@ Infantry* HordeArmyFactory::create_infantry(const string _name) {
 
     if (unit == nullptr) {
         cout << "no units with the same name" << endl;
-    } else {
-        //cout << "new infantry: " << endl;
-        //unit->info();
     }
     return unit;
 }
@@ -54,26 +43,6 @@ Distance* HordeArmyFactory::create_distance(const string _name) {
 
     if (unit == nullptr) {
         cout << "no units with the same name" << endl;
-    } else {
-        //cout << "new distance: " << endl;
-        //unit->info();
-    }
-    return unit;
-}
-
-Hero* HordeArmyFactory::create_hero(const string _name) {
-    Hero* unit = nullptr;
-    if (_name == "Thrall") {
-        unit = new Thrall();
-    } else if (_name == "Zuljin") {
-        unit = new Zuljin();
-    }
-
-    if (unit == nullptr) {
-        cout << "no units with the same name" << endl;
-    } else {
-        //cout << "new hero: " << endl;
-        //unit->info();
     }
     return unit;
 }

@@ -32,64 +32,35 @@ Hero::Hero(string _name, int _health, int _damage) :
 {}
 
 Hero::~Hero() {
-    while (!items.empty()) {
-        delete (items.back());
-        items.pop_back();
-    }
+    delete weapon;
+    delete accessory;
 }
 
+//Builders
 void HeroBuilder::set_hero(Hero* _hero) {
     hero = _hero;
 }
 
-void HeroBuilder::add_item(const int _id) {
-    Item* ptr = nullptr;
-    if (_id == 1) {
-        ptr = new Warmace(hero);
-    } else if (_id == 2) {
-        ptr = new Shadowmourne(hero);
-    } else if (_id == 3) {
-        ptr = new DeathbringersWill(hero);
-    } else if (_id == 4) {
-        ptr = new Flask(hero);
-    }
+void TankBuilder::add_weapon() {hero->weapon = new Warmace(hero);}
+void TankBuilder::add_accessory() {hero->accessory = new DeathbringersWill(hero);}
 
-    if (ptr == nullptr) {
-        cout << "no such item" << endl;
-    } else {
-        int cnt = 0;
-        for (Item* it : hero->items) {
-            if (ptr->type == it->type) {
-                cnt++;
-            }
-        }
-        int max_can = 0;
-        if (ptr->type == item_type::WEAPON) {
-            max_can = hero->max_weapon;
-        } else if (ptr->type == item_type::ACCESSORY) {
-            max_can = hero->max_accessory;
-        }
-        if (cnt < max_can) {
-            hero->items.push_back(ptr);
-            //cout << "added item: " << endl;
-            //ptr->info();
-        } else {
-            cout << "can't add this item" << endl;
-            delete ptr;
-        }
-    }
+void DamagerBuilder::add_weapon() {hero->weapon = new Shadowmourne(hero);}
+void DamagerBuilder::add_accessory() {hero->accessory = new DeathbringersWill(hero);}
+
+void HealBuilder::add_weapon() {hero->weapon = new Warmace(hero);}
+void HealBuilder::add_accessory() {hero->accessory = new Flask(hero);}
+
+void HeroManager::set_HeroBuilder(HeroBuilder* _builder) {builder = _builder;}
+
+Hero* HeroManager::create_hero() {
+    Hero* hero = new Hero("Hero", 1000, 100);
+    builder->set_hero(hero);
+    builder->add_weapon();
+    builder->add_accessory();
+    return hero;
 }
 
-void HeroBuilder::remove_item(const int _id) {
-    for (int i = 0; i < (int)hero->items.size(); ++i) {
-        if (hero->items[i]->item_id == _id) {
-            delete hero->items[i];
-            hero->items.erase(hero->items.begin() + i);
-            break;
-        }
-    }
-}
-
+// Army
 void Army::add_infantry(ArmyFactory* factory, const string _name) {
     Infantry* unit = factory->create_infantry(_name);
     if (unit != nullptr) {
@@ -104,21 +75,11 @@ void Army::add_distance(ArmyFactory* factory, const string _name) {
     }
 }
 
-void Army::add_hero(ArmyFactory* factory, const string _name) {
-    Hero* unit = factory->create_hero(_name);
-    if (unit != nullptr) {
-        hero.push_back(unit);
-    }
-}
-
 Army::~Army() {
     for (int i = 0; i < (int)infantry.size(); ++i) {
         delete infantry[i];
     }
     for (int i = 0; i < (int)distance.size(); ++i) {
         delete distance[i];
-    }
-    for (int i = 0; i < (int)hero.size(); ++i) {
-        delete hero[i];
     }
 }

@@ -68,12 +68,6 @@ TEST(HORDE, test_units) {
     unit = new Shaman();
     ASSERT_EQ(unit->name, "Shaman");
     delete unit;
-    unit = new Thrall();
-    ASSERT_EQ(unit->name, "Thrall");
-    delete unit;
-    unit = new Zuljin();
-    ASSERT_EQ(unit->name, "Zuljin");
-    delete unit;
 }
 
 TEST(HORDE, class_ArmyFactory_create_infantry_test) {
@@ -94,14 +88,6 @@ TEST(HORDE, class_ArmyFactory_create_infantry_test) {
     ASSERT_EQ(unit->name, "Shaman");
     ASSERT_EQ(unit->type, warrior_type::DISTANCE);
     delete unit;
-    unit = factory->create_hero("Thrall");
-    ASSERT_EQ(unit->name, "Thrall");
-    ASSERT_EQ(unit->type, warrior_type::HERO);
-    delete unit;
-    unit = factory->create_hero("Zuljin");
-    ASSERT_EQ(unit->name, "Zuljin");
-    ASSERT_EQ(unit->type, warrior_type::HERO);
-    delete unit;
     delete factory;
 }
 
@@ -117,12 +103,6 @@ TEST(ALIANCE, test_units) {
     delete unit;
     unit = new Priest();
     ASSERT_EQ(unit->name, "Priest");
-    delete unit;
-    unit = new Varian();
-    ASSERT_EQ(unit->name, "Varian");
-    delete unit;
-    unit = new Greymane();
-    ASSERT_EQ(unit->name, "Greymane");
     delete unit;
 }
 
@@ -144,37 +124,93 @@ TEST(ALIANCE, class_ArmyFactory_create_infantry_test) {
     ASSERT_EQ(unit->name, "Priest");
     ASSERT_EQ(unit->type, warrior_type::DISTANCE);
     delete unit;
-    unit = factory->create_hero("Varian");
-    ASSERT_EQ(unit->name, "Varian");
-    ASSERT_EQ(unit->type, warrior_type::HERO);
-    delete unit;
-    unit = factory->create_hero("Greymane");
-    ASSERT_EQ(unit->name, "Greymane");
-    ASSERT_EQ(unit->type, warrior_type::HERO);
-    delete unit;
     delete factory;
 }
 
-TEST(HERO_BUILDER, test_adding_items) {
-    HeroBuilder builder;
-    Hero* hero = new Hero("test", 0, 0);
-    builder.set_hero(hero);
-    builder.add_item(1);
-    ASSERT_EQ(hero->damage, 200);
+TEST(HERO_BUILDER, TankBuilder) {
+    TankBuilder* builder = new TankBuilder();
+    Hero* hero = new Hero("x", 0, 0);
+    builder->set_hero(hero);
+    builder->add_weapon();
+    builder->add_accessory();
+    ASSERT_EQ(hero->weapon->name, "Warmace of Menethil");
+    ASSERT_EQ(hero->accessory->name, "Deathbringer's Will");
     ASSERT_EQ(hero->health, 500);
-    ASSERT_EQ(hero->max_health, 500);
-    builder.remove_item(1);
-    ASSERT_EQ(hero->damage, 0);
-    ASSERT_EQ(hero->health, 0);
-    ASSERT_EQ(hero->max_health, 0);
-    ASSERT_EQ((int)hero->items.size(), 0);
-    builder.add_item(2);
-    ASSERT_EQ(hero->damage, 500);
-    ASSERT_EQ(hero->health, 0);
-    ASSERT_EQ(hero->max_health, 0);
-    builder.add_item(3);
-    ASSERT_EQ((int)hero->items.size(), 2);
+    ASSERT_EQ(hero->damage, 200);
     delete hero;
+    delete builder;
+}
+
+
+TEST(HERO_BUILDER, DamagerBuilder) {
+    DamagerBuilder* builder = new DamagerBuilder();
+    Hero* hero = new Hero("x", 0, 0);
+    builder->set_hero(hero);
+    builder->add_weapon();
+    builder->add_accessory();
+    ASSERT_EQ(hero->weapon->name, "Shadowmourne");
+    ASSERT_EQ(hero->accessory->name, "Deathbringer's Will");
+    ASSERT_EQ(hero->health, 0);
+    ASSERT_EQ(hero->damage, 500);
+    delete hero;
+    delete builder;
+}
+
+
+TEST(HERO_BUILDER, HealBuilder) {
+    HealBuilder* builder = new HealBuilder();
+    Hero* hero = new Hero("x", 0, 0);
+    builder->set_hero(hero);
+    builder->add_weapon();
+    builder->add_accessory();
+    ASSERT_EQ(hero->weapon->name, "Warmace of Menethil");
+    ASSERT_EQ(hero->accessory->name, "Flask of Professor Putricide");
+    ASSERT_EQ(hero->health, 500);
+    ASSERT_EQ(hero->damage, 200);
+    delete hero;
+    delete builder;
+}
+
+TEST(HERO_MANAGER, tank_builder) {
+    HeroManager* manager = new HeroManager();
+    TankBuilder* builder = new TankBuilder();
+    manager->set_HeroBuilder(builder);
+    Hero* hero = manager->create_hero();
+    ASSERT_EQ(hero->weapon->name, "Warmace of Menethil");
+    ASSERT_EQ(hero->accessory->name, "Deathbringer's Will");
+    ASSERT_EQ(hero->health, 1000 + 500);
+    ASSERT_EQ(hero->damage, 100 + 200);
+    delete hero;
+    delete builder;
+    delete manager;
+}
+
+TEST(HERO_MANAGER, damager_builder) {
+    HeroManager* manager = new HeroManager();
+    DamagerBuilder* builder = new DamagerBuilder();
+    manager->set_HeroBuilder(builder);
+    Hero* hero = manager->create_hero();
+    ASSERT_EQ(hero->weapon->name, "Shadowmourne");
+    ASSERT_EQ(hero->accessory->name, "Deathbringer's Will");
+    ASSERT_EQ(hero->health, 1000 + 0);
+    ASSERT_EQ(hero->damage, 100 + 500);
+    delete hero;
+    delete builder;
+    delete manager;
+}
+
+TEST(HERO_MANAGER, heal_builder) {
+    HeroManager* manager = new HeroManager();
+    HealBuilder* builder = new HealBuilder();
+    manager->set_HeroBuilder(builder);
+    Hero* hero = manager->create_hero();
+    ASSERT_EQ(hero->weapon->name, "Warmace of Menethil");
+    ASSERT_EQ(hero->accessory->name, "Flask of Professor Putricide");
+    ASSERT_EQ(hero->health, 1000 + 500);
+    ASSERT_EQ(hero->damage, 100 + 200);
+    delete hero;
+    delete builder;
+    delete manager;
 }
 
 int main(int argc, char **argv) {
