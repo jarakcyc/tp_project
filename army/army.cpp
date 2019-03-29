@@ -82,4 +82,7 @@ Army::~Army() {
     for (int i = 0; i < (int)distance.size(); ++i) {
         delete distance[i];
     }
+    if (hero != nullptr) {
+        delete hero;
+    }
 }
