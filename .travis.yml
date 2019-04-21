@@ -12,6 +12,13 @@ branches:
   only:
     - dev_1
 
+notifications:
+  email:
+    recipients:
+      - dima_sudakov@mail.ru
+    on_success: always
+    on_failure: always
+
 install:
   - |
     if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then
