@@ -21,12 +21,20 @@ target_link_libraries(main aliance)
 
 #---------------------GTEST-------------------------------
 
-set(SOURCE_EXE tests.cpp)
+option(BUILD_TESTS "Build unit tests" OFF)
 
-add_executable(tests ${SOURCE_EXE})
+if (BUILD_TESTS)
+	add_subdirectory(ext/gtest-1.8.0)
+	include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
-target_link_libraries(tests army)
-target_link_libraries(tests horde)
-target_link_libraries(tests aliance)
+	set(SOURCE_EXE tests.cpp)
 
-target_link_libraries(tests ${GTEST_LIBRARIES} pthread)
+	add_executable(tests ${SOURCE_EXE})
+
+	target_link_libraries(tests army)
+	target_link_libraries(tests horde)
+	target_link_libraries(tests aliance)
+	
+	#target_link_libraries(tests ${GTEST_LIBRARIES} pthread)
+	target_link_libraries(tests gtest gtest_main)
+endif()
