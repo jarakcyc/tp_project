@@ -24,6 +24,6 @@ install:
 script:
   - mkdir tmp
   - cd tmp
-  - cmake ..
+  - cmake .. -DBUILD_TESTS=ON
   - make
   - ./tests
