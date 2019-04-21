@@ -12,9 +12,12 @@ branches:
   only:
     - dev_1
 
+install:
+  - source ci/install-linux.sh
+
 script:
-    - mkdir tmp
-    - cd tmp
-    - cmake ..
-    - make
-    - ./tests --output-on-failure
+  - mkdir tmp
+  - cd tmp
+  - cmake ..
+  - make
+  - ./tests --output-on-failure
