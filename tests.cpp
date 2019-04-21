@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 
 TEST(ARMY, class_Warrior_1) {
-    Warrior* unit = new Warrior("Warrior", warrior_type::INFANTRY, 100, 20, 50);
+    Warrior* unit = new Warrior("Warrior", warrior_type::INFANTRY, 100, 20, 51);
     ASSERT_EQ(unit->name, "Warrior");
     ASSERT_EQ(unit->type, warrior_type::INFANTRY);
     ASSERT_EQ(unit->max_health, 100);
