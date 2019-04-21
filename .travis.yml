@@ -16,6 +16,7 @@ notifications:
   email:
     recipients:
       - dima_sudakov@mail.ru
+      - dimassudakov@gmail.com
     on_success: always
     on_failure: always
 
