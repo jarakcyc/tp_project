@@ -1,0 +1,20 @@
+dist: trusty
+sudo: required
+language: cpp
+
+os:
+- linux
+
+compiler:
+- gcc
+
+branches:
+  only:
+    - dev_1
+
+script:
+    - mkdir tmp
+    - cd tmp
+    - cmake ..
+    - make
+    - ./tests --output-on-failure
