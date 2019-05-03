@@ -2,6 +2,7 @@
 #include "items.h"
 #include <string>
 #include <vector>
+#include <deque>
 
 using namespace std;
 
@@ -35,6 +36,8 @@ class Distance : public Warrior {
 public:
     Distance(string _name, int _health, int _damage);
 };
+
+// Hero
 
 class Hero : public Warrior {
 public:
@@ -80,6 +83,8 @@ public:
     Hero* create_hero();
 };
 
+// Army
+
 class ArmyFactory {
 public:
     virtual ~ArmyFactory() {}
@@ -87,14 +92,34 @@ public:
     virtual Distance* create_distance(const string _name) = 0;
 };
 
-class Army {
+class Barracks {
 public:
-    ~Army();
+    ~Barracks();
 
     vector<Infantry*> infantry;
     vector<Distance*> distance;
-    Hero* hero = nullptr;
+    vector<Hero*> heroes;
 
     void add_infantry(ArmyFactory* factory, const string _name);
     void add_distance(ArmyFactory* factory, const string _name);
+};
+
+class Squad {
+public:
+    Squad(const string _name);
+
+    string name;
+
+    deque<Warrior*> units;
+    Hero* hero = nullptr;
+
+    void add_unit(Warrior* unit);
+    void remove_unit(Warrior* unit);
+
+    void set_hero(Hero* _hero);
+};
+
+class Army {
+private:
+    vector<Squad*> squads;
 };

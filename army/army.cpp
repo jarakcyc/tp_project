@@ -60,29 +60,54 @@ Hero* HeroManager::create_hero() {
     return hero;
 }
 
-// Army
-void Army::add_infantry(ArmyFactory* factory, const string _name) {
+// Barracks
+void Barracks::add_infantry(ArmyFactory* factory, const string _name) {
     Infantry* unit = factory->create_infantry(_name);
     if (unit != nullptr) {
         infantry.push_back(unit);
     }
 }
 
-void Army::add_distance(ArmyFactory* factory, const string _name) {
+void Barracks::add_distance(ArmyFactory* factory, const string _name) {
     Distance* unit = factory->create_distance(_name);
     if (unit != nullptr) {
         distance.push_back(unit);
     }
 }
 
-Army::~Army() {
+Barracks::~Barracks() {
     for (int i = 0; i < (int)infantry.size(); ++i) {
         delete infantry[i];
     }
     for (int i = 0; i < (int)distance.size(); ++i) {
         delete distance[i];
     }
-    if (hero != nullptr) {
-        delete hero;
+    for (int i = 0; i < (int)heroes.size(); ++i) {
+        delete heroes[i];
     }
+}
+
+// Squad 
+Squad::Squad(const string _name):
+    name(_name)
+{}
+
+void Squad::add_unit(Warrior* unit) {
+    units.push_back(unit);
+}
+
+void Squad::remove_unit(Warrior* unit) {
+    int id = -1;
+    for (int i = 0; i < (int)units.size(); ++i) {
+        if (units[i] == unit) {
+            id = i;
+            break;
+        }
+    }
+    if (id != -1)
+        units.erase(units.begin() + id);
+}
+
+void Squad::set_hero(Hero* _hero) {
+    hero = _hero;
 }

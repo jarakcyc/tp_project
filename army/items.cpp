@@ -37,20 +37,20 @@ Accessory::Accessory(Hero* _owner, const int _id, const string _name, const stri
 Warmace::Warmace(Hero* _owner):
     Weapon(_owner, 1, "Warmace of Menethil", "damage bonus +200, health bonus +500")
 {
-    const_effect();
+    add_effect();
 }
 
 Warmace::~Warmace() {
-    rm_const_effect();
+    rm_effect();
 }
 
-void Warmace::const_effect() {
+void Warmace::add_effect() {
     owner->damage += 200;
     owner->health += 500;
     owner->max_health += 500;
 }
 
-void Warmace::rm_const_effect() {
+void Warmace::rm_effect() {
     owner->damage -= 200;
     owner->max_health -= 500;
     owner->health = min(owner->health, owner->max_health);
@@ -60,18 +60,18 @@ void Warmace::rm_const_effect() {
 Shadowmourne::Shadowmourne(Hero* _owner) :
     Weapon(_owner, 2, "Shadowmourne", "damage bonus + 500")
 {
-    const_effect();
+    add_effect();
 }
 
 Shadowmourne::~Shadowmourne() {
-    rm_const_effect();
+    rm_effect();
 }
 
-void Shadowmourne::const_effect() {
+void Shadowmourne::add_effect() {
     owner->damage += 500;
 }
 
-void Shadowmourne::rm_const_effect() {
+void Shadowmourne::rm_effect() {
     owner->damage -= 500;
 }
 
@@ -80,12 +80,8 @@ DeathbringersWill::DeathbringersWill(Hero* _owner):
     Accessory(_owner, 3, "Deathbringer's Will", "damage bonus +500 in battle")
 {}
 
-void DeathbringersWill::time_effect() {
-    owner->damage += 500;
-}
-
-void DeathbringersWill::rm_time_effect() {
-    owner->damage -= 500;
+void DeathbringersWill::visit(Warrior* unit) {
+    unit->health -= 50;
 }
 
 //Flask
@@ -93,6 +89,6 @@ Flask::Flask(Hero* _owner) :
     Accessory(_owner, 4, "Flask of Professor Putricide", "heal effect +100")
 {}
 
-void Flask::time_effect() {
-    owner->health = min(owner->max_health, owner->health + 100);
+void Flask::visit(Warrior* unit) {
+    
 }

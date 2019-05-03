@@ -3,7 +3,7 @@
 mkdir tmp
 cd tmp
 
-cmake "~/dimas/project"
+cmake .. -DBUILD_TESTS=ON
 make
 
 #./tests
