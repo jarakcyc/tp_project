@@ -14,9 +14,13 @@ Warrior::Warrior(string _name, warrior_type _type, int _health, int _damage, int
 {}
 
 void Warrior::info() const {
-    cout << "name: " << name << endl;
-    cout << "health: " << health << endl;
-    cout << "damage: " << damage << endl;
+    cout << "{name: " << name << "; ";
+    cout << " health: " << health << "; ";
+    cout << " damage: " << damage << "}" << endl;
+}
+
+void Warrior::accept(Item& item) {
+    item.visit(this);
 }
 
 Infantry::Infantry(string _name, int _health, int _damage) :
@@ -88,15 +92,16 @@ Barracks::~Barracks() {
 }
 
 // Squad 
-Squad::Squad(const string _name):
-    name(_name)
-{}
-
-void Squad::add_unit(Warrior* unit) {
-    units.push_back(unit);
+Squad::Squad(const string _name) {
+    name = _name;
 }
 
-void Squad::remove_unit(Warrior* unit) {
+void Squad::add(ISquad* unit) {
+    units.push_back(unit);
+    unit->squad_name = name;
+}
+
+void Squad::remove(ISquad* unit) {
     int id = -1;
     for (int i = 0; i < (int)units.size(); ++i) {
         if (units[i] == unit) {
@@ -104,10 +109,12 @@ void Squad::remove_unit(Warrior* unit) {
             break;
         }
     }
-    if (id != -1)
+    if (id != -1) {
+        units[id]->squad_name = "";
         units.erase(units.begin() + id);
+    }
 }
 
-void Squad::set_hero(Hero* _hero) {
-    hero = _hero;
+void RelaxDecorator::update() {
+    health = max(health + 50, max_health);
 }

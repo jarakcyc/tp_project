@@ -16,15 +16,25 @@ enum warrior_type {
 
 class Warrior {
 public:
-    Warrior();
+    Warrior() {};
     Warrior(string _name, warrior_type _type, int _health, int _damage, int _cost);
-    void info() const;
-    string name;
+
+    virtual void info() const;
+    virtual void update() {};
+    void accept(Item& item);
+
     warrior_type type;
+    string name;
+    string squad_name;
     int max_health;
     int health;
     int damage;
     int cost;
+};
+
+class RelaxDecorator : public Warrior {
+public:
+    void update() override;
 };
 
 class Infantry : public Warrior {
@@ -104,22 +114,24 @@ public:
     void add_distance(ArmyFactory* factory, const string _name);
 };
 
-class Squad {
+class ISquad : public Warrior {
+public:
+    virtual ~ISquad() {};
+    virtual void add(ISquad* unit) {};
+    virtual void remove(ISquad* unit) {};
+};
+
+class Squad : public ISquad {
 public:
     Squad(const string _name);
 
-    string name;
+    deque<ISquad*> units;
 
-    deque<Warrior*> units;
-    Hero* hero = nullptr;
-
-    void add_unit(Warrior* unit);
-    void remove_unit(Warrior* unit);
-
-    void set_hero(Hero* _hero);
+    void add(ISquad* unit) override;
+    void remove(ISquad* unit) override;
 };
 
 class Army {
 private:
-    vector<Squad*> squads;
+    vector<ISquad*> squads;
 };
