@@ -25,6 +25,5 @@ public:
 
 class AlianceArmyFactory : public ArmyFactory {
 public:
-    Infantry* create_infantry(const string _name) override;
-    Distance* create_distance(const string _name) override;
+	AlianceArmyFactory();
 };

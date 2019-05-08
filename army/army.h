@@ -17,14 +17,15 @@ enum warrior_type {
 class Warrior {
 public:
     Warrior() {};
+    virtual ~Warrior() {};
     Warrior(string _name, warrior_type _type, int _health, int _damage, int _cost);
 
     virtual void info() const;
     virtual void update() {};
     void accept(Item& item);
 
-    warrior_type type;
     string name;
+    warrior_type type;
     string squad_name;
     int max_health;
     int health;
@@ -97,9 +98,11 @@ public:
 
 class ArmyFactory {
 public:
-    virtual ~ArmyFactory() {}
-    virtual Infantry* create_infantry(const string _name) = 0;
-    virtual Distance* create_distance(const string _name) = 0;
+    ~ArmyFactory() {}
+    vector<Infantry> i_list;
+    vector<Distance> d_list;
+    Infantry* create_infantry(const string _name);
+    Distance* create_distance(const string _name);
 };
 
 class Barracks {

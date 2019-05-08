@@ -35,6 +35,38 @@ Hero::Hero(string _name, int _health, int _damage) :
     Warrior(_name, warrior_type::HERO, _health, _damage, 1000)
 {}
 
+Infantry* ArmyFactory::create_infantry(const string _name) {
+    Infantry* unit = nullptr;
+
+    for (int i = 0; i < (int)i_list.size(); ++i) {
+        if (i_list[i].name == _name) {
+            unit = new Infantry(i_list[i].name, i_list[i].health, i_list[i].damage);
+            break;
+        }
+    }
+
+    if (unit == nullptr) {
+        cout << "no units with the same name" << endl;
+    }
+    return unit;
+}
+
+Distance* ArmyFactory::create_distance(const string _name) {
+    Distance* unit = nullptr;
+
+    for (int i = 0; i < (int)d_list.size(); ++i) {
+        if (d_list[i].name == _name) {
+            unit = new Distance(d_list[i].name, d_list[i].health, d_list[i].damage);
+            break;
+        }
+    }
+
+    if (unit == nullptr) {
+        cout << "no units with the same name" << endl;
+    }
+    return unit;
+}
+
 Hero::~Hero() {
     delete weapon;
     delete accessory;
