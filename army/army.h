@@ -22,7 +22,7 @@ public:
 
     virtual void info() const;
     virtual void update() {};
-    void accept(Item& item);
+    void accept(Item* item);
 
     string name;
     warrior_type type;

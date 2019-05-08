@@ -19,8 +19,8 @@ void Warrior::info() const {
     cout << " damage: " << damage << "}" << endl;
 }
 
-void Warrior::accept(Item& item) {
-    item.visit(this);
+void Warrior::accept(Item* item) {
+    item->visit(this);
 }
 
 Infantry::Infantry(string _name, int _health, int _damage) :
@@ -68,6 +68,7 @@ Distance* ArmyFactory::create_distance(const string _name) {
 }
 
 Hero::~Hero() {
+    cerr << "ok----------------------------------" << endl;
     delete weapon;
     delete accessory;
 }

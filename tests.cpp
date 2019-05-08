@@ -2,7 +2,7 @@
 #include "aliance.h"
 #include "army.h"
 #include <gtest/gtest.h>
-
+/*
 TEST(ARMY, class_Warrior_1) {
     Warrior* unit = new Warrior("Warrior", warrior_type::INFANTRY, 100, 20, 50);
     ASSERT_EQ(unit->name, "Warrior");
@@ -44,7 +44,7 @@ TEST(ARMY, test_class_Distance) {
     ASSERT_EQ(unit->damage, 2);
     delete unit;
 }
-
+*/
 TEST(ARMY, test_class_Hero) {
     Warrior* unit = new Hero("unit", 1, 2);
     ASSERT_EQ(unit->name, "unit");
@@ -54,7 +54,7 @@ TEST(ARMY, test_class_Hero) {
     ASSERT_EQ(unit->damage, 2);
     delete unit;
 }
-
+/*
 TEST(HORDE, test_units) {
     Warrior* unit = new Orc();
     ASSERT_EQ(unit->name, "Orc");
@@ -212,7 +212,7 @@ TEST(HERO_MANAGER, heal_builder) {
     delete builder;
     delete manager;
 }
-
+*/
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
