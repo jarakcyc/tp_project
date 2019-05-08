@@ -68,15 +68,12 @@ Distance* ArmyFactory::create_distance(const string _name) {
 }
 
 Hero::~Hero() {
-    cerr << "start destr" << endl;
-    if (weapon != nullptr) {
+    /*if (weapon != nullptr) {
         delete weapon;
     }
-    cerr << "del weap" << endl;
     if (accessory != nullptr) {
         delete accessory;
-    }
-    cerr << "del acc" << endl;
+    }*/
 }
 
 //Builders
