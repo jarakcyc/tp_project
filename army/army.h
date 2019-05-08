@@ -54,8 +54,8 @@ class Hero : public Warrior {
 public:
     Hero(string _name, int _health, int _damage);
     ~Hero();
-    Item* weapon;
-    Item* accessory;
+    Item* weapon = nullptr;
+    Item* accessory = nullptr;
 };
 
 class HeroBuilder {
