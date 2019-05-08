@@ -17,7 +17,7 @@ enum warrior_type {
 class Warrior {
 public:
     Warrior() {};
-    //virtual ~Warrior() {};
+    virtual ~Warrior() {};
     Warrior(string _name, warrior_type _type, int _health, int _damage, int _cost);
 
     virtual void info() const;
