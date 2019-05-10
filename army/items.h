@@ -5,6 +5,7 @@
 
 using namespace std;
 
+class Warrior;
 class Hero;
 
 enum item_type {
@@ -24,11 +25,10 @@ public:
     const string description;
     void info() const;
 
-    virtual void const_effect() {};
-    virtual void rm_const_effect() {};
+    virtual void add_effect() {};
+    virtual void rm_effect() {};
 
-    virtual void time_effect() {};
-    virtual void rm_time_effect() {};
+    virtual void visit(Warrior* unit) {};
 };
 
 class Weapon : public Item {
@@ -46,30 +46,30 @@ class Warmace : public Weapon { // id = 1, damage bonus +200, health bonus +500
 public:
     Warmace(Hero* _owner);
     ~Warmace();
-    void const_effect() override;
-    void rm_const_effect() override;
+    void add_effect() override;
+    void rm_effect() override;
 };
 
 class Shadowmourne : public Weapon { // id = 2, damage bonus + 500
 public:
     Shadowmourne(Hero* _owner);
     ~Shadowmourne();
-    void const_effect() override;
-    void rm_const_effect() override;
+    void add_effect() override;
+    void rm_effect() override;
 };
 
-class DeathbringersWill : public Accessory { // id = 3, damage bonus +500 in battle
+class DeathbringersWill : public Accessory { // id = 3, damage all units in squad on 50
 public:
     DeathbringersWill(Hero* _owner);
     ~DeathbringersWill() {};
-    void time_effect() override;
-    void rm_time_effect() override;
+
+    void visit(Warrior* unit) override;
 };
 
-class Flask : public Accessory { // id = 4, heal effect +100
+class Flask : public Accessory { // id = 4, heal all units in squad per 100
 public:
     Flask(Hero* _owner);
     ~Flask() {};
-    void time_effect() override;
-    void rm_time_effect() override {};
+
+    void visit(Warrior* unit) override;
 };

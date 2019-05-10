@@ -1,38 +1,58 @@
-#include "horde.h"
-#include "aliance.h"
-#include "army.h"
+#include "gameplay.h"
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
-void make_step(const string& command, ArmyFactory* factory, Army* army) {
+void fail() {
+    cout << "incorrect" << endl;
+}
+
+void makeStep(int player_id, Barracks& barracks) {
+}
+
+void initialize() {
+    HordeFactory = new HordeArmyFactory();
+    AlianceFactory = new AlianceArmyFactory();
+    manager = new HeroManager();
 }
 
 int main() {
-    cout << "Hello, please change your fraction!(Aliance/Horde)" << endl;
+    initialize();
 
-    Army* army = new Army();
-    ArmyFactory* factory = nullptr;
+    cout << "Hello, please enter number of players!" << endl;
+    int nPlayers;
+    cin >> nPlayers;
 
-    string race = "";
-    while (cin >> race) {
-        if (race == "Horde") {
-            cout << "You choose Horde!" << endl;
-            factory = new HordeArmyFactory();
-            break;
-        } else if (race == "Aliance") {
-            cout << "You choose Aliance!" << endl;
-            factory = new AlianceArmyFactory();
-            break;
-        } else {
-            cout << "unknown race" << endl;
+    barracks.resize(nPlayers);
+    armies.resize(nPlayers);
+    castle.resize(nPlayers, 10000);
+    money.resize(nPlayers, 0);
+
+    for (int i = 0; i < nPlayers; ++i) {
+        cout << i + 1 << " player's step" << endl;
+        cout << "Please chose your faraction A or H(Aliance/Horde)" << endl;
+        string s;
+        while (cin >> s) {
+            if (s.size() > 1)
+                fail();
+            else if (s[0] == 'H') {
+                factories.push_back(HordeFactory);
+                break;
+            } else if (s[0] == 'A') {
+                factories.push_back(AlianceFactory);
+                break;
+            } else 
+                fail();
         }
     }
 
-    string command = "";
-    while (cin >> command) {
-        make_step(command, factory, army);
+    while (1) {
+        for (int i = 0; i < nPlayers; ++i) {
+            cout << i + 1 << " player's step" << endl;
+            makeStep(i, barracks[i]);
+        }
     }
     return 0;
 }

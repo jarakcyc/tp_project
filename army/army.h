@@ -2,6 +2,7 @@
 #include "items.h"
 #include <string>
 #include <vector>
+#include <deque>
 
 using namespace std;
 
@@ -15,15 +16,40 @@ enum warrior_type {
 
 class Warrior {
 public:
-    Warrior();
+    Warrior() {};
+    virtual ~Warrior() {};
     Warrior(string _name, warrior_type _type, int _health, int _damage, int _cost);
-    void info() const;
+
+    virtual void info() const;
+    virtual void update() {};
+    virtual void train() {};
+
+    void accept(Item* item);
+
     string name;
     warrior_type type;
+    string squad_name;
     int max_health;
     int health;
     int damage;
     int cost;
+    bool in_battle = false;
+};
+
+class RelaxDecorator : public Warrior {
+private:
+    Warrior* unit;
+public:
+    RelaxDecorator(Warrior* _unit);
+    void update() override;
+};
+
+class BattleDecorator : public Warrior {
+private:
+    Warrior* unit;
+public:
+    BattleDecorator(Warrior* _unit);
+    void update() override {};
 };
 
 class Infantry : public Warrior {
@@ -36,12 +62,14 @@ public:
     Distance(string _name, int _health, int _damage);
 };
 
+// Hero
+
 class Hero : public Warrior {
 public:
     Hero(string _name, int _health, int _damage);
     ~Hero();
-    Item* weapon;
-    Item* accessory;
+    Item* weapon = nullptr;
+    Item* accessory = nullptr;
 };
 
 class HeroBuilder {
@@ -80,21 +108,31 @@ public:
     Hero* create_hero();
 };
 
+// Army
+
 class ArmyFactory {
 public:
-    virtual ~ArmyFactory() {}
-    virtual Infantry* create_infantry(const string _name) = 0;
-    virtual Distance* create_distance(const string _name) = 0;
+    ~ArmyFactory() {}
+    vector<Infantry> i_list;
+    vector<Distance> d_list;
+    Infantry* create_infantry(const string _name);
+    Distance* create_distance(const string _name);
+};
+
+class Barracks {
+public:
+    ~Barracks();
+
+    vector<Infantry*> infantry;
+    vector<Distance*> distance;
+    vector<Hero*> heroes;
+
+    void add_infantry(ArmyFactory* factory, const string _name, int& money);
+    void add_distance(ArmyFactory* factory, const string _name, int& money);
+    void add_hero(HeroManager* manager, const string _name, int& money);
 };
 
 class Army {
 public:
-    ~Army();
-
-    vector<Infantry*> infantry;
-    vector<Distance*> distance;
-    Hero* hero = nullptr;
-
-    void add_infantry(ArmyFactory* factory, const string _name);
-    void add_distance(ArmyFactory* factory, const string _name);
+    vector<Warrior*> unit;
 };
