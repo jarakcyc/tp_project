@@ -1,71 +1,21 @@
-#include "horde.h"
-#include "aliance.h"
-#include "army.h"
+#include "gameplay.h"
 #include <iostream>
 #include <string>
 #include <vector>
 
 using namespace std;
 
-ArmyFactory* HordeFactory;
-ArmyFactory* AlianceFactory;
-
-HeroBuilder* tank;
-HeroBuilder* damager;
-HeroBuilder* heal;
-HeroManager* manager;
-
-vector<Barracks> barracks;
-vector<Army> armies;
-vector<ArmyFactory*> factories;
-
-class Command {
-public:
-    virtual ~Command() {};
-    virtual void execute(vector<string> params) {};
-};
-
-class CreateCommand : public Command {
-public:
-};
-
-class MakeSquadCommand : public Command {
-public:
-};
-
-class AddToSquadCommand : public Command {
-public:
-};
-
-class AttackCommand : public Command {
-public:
-};
-
-class DefendCommand : public Command {
-public:
-};
-
-class Invoker {
-private:
-    Command* command;
-public:
-};
-
 void fail() {
     cout << "incorrect" << endl;
 }
 
-void initialize() {
-    ArmyFactory* HordeFactory = new HordeArmyFactory();
-    ArmyFactory* AlianceFactory = new AlianceArmyFactory();
-
-    HeroBuilder* tank = new TankBuilder();
-    HeroBuilder* damager = new DamagerBuilder();
-    HeroBuilder* heal = new HealBuilder();
-    HeroManager* manager = new HeroManager();
+void makeStep(int player_id, Barracks& barracks) {
 }
 
-void makeStep(int player_id, Barracks& barracks) {
+void initialize() {
+    HordeFactory = new HordeArmyFactory();
+    AlianceFactory = new AlianceArmyFactory();
+    manager = new HeroManager();
 }
 
 int main() {
@@ -77,6 +27,8 @@ int main() {
 
     barracks.resize(nPlayers);
     armies.resize(nPlayers);
+    castle.resize(nPlayers, 10000);
+    money.resize(nPlayers, 0);
 
     for (int i = 0; i < nPlayers; ++i) {
         cout << i + 1 << " player's step" << endl;

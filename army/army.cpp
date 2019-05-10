@@ -101,18 +101,53 @@ Hero* HeroManager::create_hero() {
 }
 
 // Barracks
-void Barracks::add_infantry(ArmyFactory* factory, const string _name) {
+void Barracks::add_infantry(ArmyFactory* factory, const string _name, int& money) {
     Infantry* unit = factory->create_infantry(_name);
-    if (unit != nullptr) {
+    if (unit == nullptr) {
+        return;
+    }
+    if (money >= unit->cost) {
+        money -= unit->cost;
         infantry.push_back(unit);
+    } else {
+        delete unit;
     }
 }
 
-void Barracks::add_distance(ArmyFactory* factory, const string _name) {
+void Barracks::add_distance(ArmyFactory* factory, const string _name, int& money) {
     Distance* unit = factory->create_distance(_name);
-    if (unit != nullptr) {
-        distance.push_back(unit);
+    if (unit == nullptr) {
+        return;
     }
+    if (money >= unit->cost) {
+        money -= unit->cost;
+        distance.push_back(unit);
+    } else {
+        delete unit;
+    }
+}
+
+void Barracks::add_hero(HeroManager* manager, const string _name, int& money) {
+    HeroBuilder* builder = nullptr;
+    if (_name == "tank") {
+        builder = new TankBuilder();
+    } else if (_name == "heal") {
+        builder = new HealBuilder();
+    } else if (_name == "damager") {
+        builder = new DamagerBuilder();
+    }
+
+    manager->set_HeroBuilder(builder);
+    try {
+        Hero* unit = manager->create_hero();
+        if (money >= unit->cost) {
+            money -= unit->cost;
+            heroes.push_back(unit);
+        } else {
+            delete unit;
+        }
+    }
+    catch (...) {}
 }
 
 Barracks::~Barracks() {
@@ -127,30 +162,11 @@ Barracks::~Barracks() {
     }
 }
 
-// Squad 
-Squad::Squad(const string _name) {
-    name = _name;
-}
-
-void Squad::add(ISquad* unit) {
-    units.push_back(unit);
-    unit->squad_name = name;
-}
-
-void Squad::remove(ISquad* unit) {
-    int id = -1;
-    for (int i = 0; i < (int)units.size(); ++i) {
-        if (units[i] == unit) {
-            id = i;
-            break;
-        }
-    }
-    if (id != -1) {
-        units[id]->squad_name = "";
-        units.erase(units.begin() + id);
-    }
+RelaxDecorator::RelaxDecorator(Warrior* _unit) {
+    unit = _unit;
+    unit->in_battle = false;
 }
 
 void RelaxDecorator::update() {
-    health = max(health + 50, max_health);
+    unit->health = max(unit->health + 50, unit->max_health);
 }

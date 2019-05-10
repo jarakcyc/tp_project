@@ -15,9 +15,17 @@ add_executable(main ${SOURCE_EXE})
 
 add_subdirectory(army)
 
-target_link_libraries(main army)
-target_link_libraries(main horde)
-target_link_libraries(main aliance)
+set(SOURCE_LIB gameplay.cpp)
+add_library(gameplay STATIC ${SOURCE_LIB})
+
+target_link_libraries(gameplay army)
+target_link_libraries(gameplay horde)
+target_link_libraries(gameplay aliance)
+
+target_link_libraries(main gameplay)
+#target_link_libraries(main army)
+#target_link_libraries(main horde)
+#target_link_libraries(main aliance)
 
 #---------------------GTEST-------------------------------
 
