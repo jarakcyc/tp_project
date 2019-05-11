@@ -78,12 +78,12 @@ Distance* ArmyFactory::create_distance(const string _name) {
 }
 
 Hero::~Hero() {
-    if (weapon != nullptr) {
+    /*if (weapon != nullptr) {
         delete weapon;
     }
     if (accessory != nullptr) {
         delete accessory;
-    }
+    }*/
 }
 
 //Builders
@@ -176,10 +176,11 @@ RelaxDecorator::RelaxDecorator(Warrior* unit) :
     weapon = unit->weapon;
     accessory = unit->accessory;
     target = -1;
+    delete unit;
 }
 
 void RelaxDecorator::update() {
-    health = max(health + 50, max_health);
+    health = min(health + 50, max_health);
 }
 
 BattleDecorator::BattleDecorator(Warrior* unit, int _target) :
@@ -189,4 +190,5 @@ BattleDecorator::BattleDecorator(Warrior* unit, int _target) :
     weapon = unit->weapon;
     accessory = unit->accessory;
     target = _target;
+    delete unit;
 }

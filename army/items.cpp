@@ -90,5 +90,6 @@ Flask::Flask(Hero* _owner) :
 {}
 
 void Flask::visit(Warrior* unit) {
-    unit->health = max(unit->health, unit->max_health);
+    cerr << "go" << endl;
+    unit->health = min(unit->health + 50, unit->max_health);
 }

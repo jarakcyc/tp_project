@@ -40,9 +40,9 @@ void game() {
     int cnt = nPlayers;
     while (cnt > 1) {
         for (int i = 0; i < nPlayers; ++i) {
-            money[i] += 100;
+            money[i] += 10000;
 
-            for (int j = 0; j < (int)armies[i].units.size(); ++i) {
+            for (int j = 0; j < (int)armies[i].units.size(); ++j) {
                 armies[i].units[j]->update();
             }
         }
@@ -70,19 +70,14 @@ void game() {
 
             for (int i = 0; i < (int)enemies[player_id].size(); ++i) {
                 Warrior*& unit = enemies[player_id][i].second;
-                if (unit->name == "Hero" && unit->accessory->item_id == 4) {
-                    for (int j = 0; j < (int)enemies[player_id].size(); ++j) {
-                        if (enemies[player_id][i].first == enemies[player_id][j].first) {
-                            enemies[player_id][j].second->accept(unit->accessory);
-                        }
-                    }
-                } else if (unit->name == "Hero" && unit->accessory->item_id == 3) {
+                if (unit->name == "Hero" && unit->accessory->item_id == 3) {
                     for (int j = 0; j < (int)armies[player_id].units.size(); ++j) {
                         armies[player_id].units[j]->accept(unit->accessory);
                     }
                 }
             }
 
+            // funeral
             vector<int> dead;
             for (int i = 0; i < (int)armies[player_id].units.size(); ++i) {
                 if (armies[player_id].units[i]->health <= 0) {
@@ -92,6 +87,7 @@ void game() {
 
             while (!dead.empty()) {
                 funeral(player_id, dead.back());
+                dead.pop_back();
             }
 
             cout << "step of " << player_id << " player" << endl;
@@ -225,16 +221,17 @@ void CreateCommand::execute(vector<string> params) {
 }
 
 void AttackCommand::execute(vector<string> params) {
-    int from_id = to_int(params[0]);
-    int to_id = to_int(params[1]);
-    int unit_id = to_int(params[2]);
-
     for (int i = 1; i < 3; ++i) {
         if (!is_pos_int(params[i])) {
             fail();
             return;
         }
     }
+
+    int from_id = to_int(params[0]);
+    int unit_id = to_int(params[1]);
+    int to_id = to_int(params[2]);
+
 
     if (to_id >= (int)armies.size()) {
         fail();
@@ -418,7 +415,7 @@ bool ProxyInvoker::parse(int player_id, string args) {
         } else {
             fail();
         }
-    } else if (words[0] == "atc") { // atk u_id p_id
+    } else if (words[0] == "atk") { // atk u_id p_id
         if ((int)params.size() == 3) {
             invoker->set_command(new AttackCommand());
             invoker->exec_command(params);
@@ -426,7 +423,7 @@ bool ProxyInvoker::parse(int player_id, string args) {
             fail();
         }
     } else if (words[0] == "def") { // def u_id
-        if ((int)params.size() == 3) {
+        if ((int)params.size() == 2) {
             invoker->set_command(new DefendCommand());
             invoker->exec_command(params);
         } else {
