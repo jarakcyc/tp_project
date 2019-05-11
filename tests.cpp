@@ -221,6 +221,21 @@ TEST(GAMEPLAY, to_str) {
     ASSERT_EQ("0", to_str(0));
 }
 
+TEST(GAMEPLAY, is_pos_int) {
+    ASSERT_EQ(true, is_pos_int("153"));
+    ASSERT_EQ(true, is_pos_int("0"));
+    ASSERT_EQ(false, is_pos_int("-1"));
+    ASSERT_EQ(false, is_pos_int("abcd"));
+}
+
+TEST(GAMEPLAY, get_words) {
+    ProxyInvoker pi;
+    vector<string> w = pi.get_words("hello  world \n");
+    ASSERT_EQ((int)w.size(), 2);
+    ASSERT_EQ(w[0], "hello");
+    ASSERT_EQ(w[1], "world");
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

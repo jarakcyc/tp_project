@@ -146,6 +146,10 @@ void Army::add_hero(HeroManager* manager, const string _name, int& money) {
         builder = new DamagerBuilder();
     }
 
+    if (builder == nullptr) {
+        return;
+    }
+
     manager->set_HeroBuilder(builder);
     try {
         Hero* unit = manager->create_hero();
@@ -155,6 +159,7 @@ void Army::add_hero(HeroManager* manager, const string _name, int& money) {
         } else {
             delete unit;
         }
+        delete builder;
     }
     catch (...) {}
 }
@@ -168,6 +173,8 @@ RelaxDecorator::RelaxDecorator(Warrior* unit) :
     Warrior(unit->name, unit->type, unit->health, unit->max_health, unit->damage, unit->cost)
 {
     //in_battle = false;
+    weapon = unit->weapon;
+    accessory = unit->accessory;
     target = -1;
 }
 
@@ -179,5 +186,7 @@ BattleDecorator::BattleDecorator(Warrior* unit, int _target) :
     Warrior(unit->name, unit->type, unit->health, unit->max_health, unit->damage, unit->cost)
 {
     //in_battle = true;
+    weapon = unit->weapon;
+    accessory = unit->accessory;
     target = _target;
 }

@@ -28,13 +28,15 @@ public:
 
     string name;
     warrior_type type;
-    string squad_name;
     int max_health;
     int health;
     int damage;
     int cost;
     //bool in_battle = false;
     int target = -1; // -1 if unit relax
+
+    Item* weapon = nullptr;
+    Item* accessory = nullptr;
 };
 
 class RelaxDecorator : public Warrior {
@@ -65,8 +67,8 @@ class Hero : public Warrior {
 public:
     Hero(string _name, int _health, int _damage);
     ~Hero();
-    Item* weapon = nullptr;
-    Item* accessory = nullptr;
+    //Item* weapon = nullptr;
+    //Item* accessory = nullptr;
 };
 
 class HeroBuilder {

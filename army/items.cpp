@@ -77,7 +77,7 @@ void Shadowmourne::rm_effect() {
 
 //Deathbringer's Will
 DeathbringersWill::DeathbringersWill(Hero* _owner):
-    Accessory(_owner, 3, "Deathbringer's Will", "damage bonus +500 in battle")
+    Accessory(_owner, 3, "Deathbringer's Will", "damage +50 for all enemies in battle")
 {}
 
 void DeathbringersWill::visit(Warrior* unit) {
