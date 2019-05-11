@@ -222,10 +222,10 @@ TEST(GAMEPLAY, to_str) {
 }
 
 TEST(GAMEPLAY, is_pos_int) {
-    ASSERT_EQ(true, is_pos_int("153"));
-    ASSERT_EQ(true, is_pos_int("0"));
-    ASSERT_EQ(false, is_pos_int("-1"));
-    ASSERT_EQ(false, is_pos_int("abcd"));
+    ASSERT_TRUE(is_pos_int("153"));
+    ASSERT_TRUE(is_pos_int("0"));
+    ASSERT_FALSE(is_pos_int("-1"));
+    ASSERT_FALSE(is_pos_int("abcd"));
 }
 
 TEST(GAMEPLAY, get_words) {
