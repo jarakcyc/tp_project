@@ -12,6 +12,7 @@ branches:
   only:
     - dev_1
     - develop
+    - dev_2
 
 notifications:
   email:
