@@ -5,21 +5,18 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <queue>
 
-inline int to_int(const string s);
-inline string to_str(const int n);
+using namespace std;
 
-ArmyFactory* HordeFactory;
-ArmyFactory* AlianceFactory;
+int to_int(const string s);
+string to_str(const int n);
 
-HeroManager* manager;
+void initialize(int nPlayers);
 
-vector<Barracks> barracks;
-vector<Army> armies;
-vector<ArmyFactory*> factories;
+void init_factories();
 
-vector<int> money;
-vector<int> castle;
+void battle(Warrior* w1, Warrior* w2);
 
 class Command {
 public:
@@ -58,7 +55,7 @@ private:
 public:
     ProxyInvoker() {invoker = new Invoker();}
 
-    vector<string> parse(string args) {};
+    vector<string> parse(int player_id, string args);
 
     void set_command(Command* _command) override {};
     void exec_command(vector<string> params) override {};

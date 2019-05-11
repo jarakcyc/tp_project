@@ -1,6 +1,4 @@
-#include "horde.h"
-#include "aliance.h"
-#include "army.h"
+#include "gameplay.h"
 #include <gtest/gtest.h>
 
 TEST(ARMY, class_Warrior_1) {
@@ -211,6 +209,16 @@ TEST(HERO_MANAGER, heal_builder) {
     delete hero;
     delete builder;
     delete manager;
+}
+
+TEST(GAMEPLAY, to_int) {
+    ASSERT_EQ(153, to_int("153"));
+    ASSERT_EQ(0, to_int("0"));
+}
+
+TEST(GAMEPLAY, to_str) {
+    ASSERT_EQ("153", to_str(153));
+    ASSERT_EQ("0", to_str(0));
 }
 
 int main(int argc, char **argv) {

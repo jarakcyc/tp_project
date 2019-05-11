@@ -18,11 +18,11 @@ class Warrior {
 public:
     Warrior() {};
     virtual ~Warrior() {};
+    Warrior(string _name, warrior_type _type, int _health, int _mah_health, int _damage, int _cost);
     Warrior(string _name, warrior_type _type, int _health, int _damage, int _cost);
 
     virtual void info() const;
     virtual void update() {};
-    virtual void train() {};
 
     void accept(Item* item);
 
@@ -33,22 +33,19 @@ public:
     int health;
     int damage;
     int cost;
-    bool in_battle = false;
+    //bool in_battle = false;
+    int target = -1; // -1 if unit relax
 };
 
 class RelaxDecorator : public Warrior {
-private:
-    Warrior* unit;
 public:
     RelaxDecorator(Warrior* _unit);
     void update() override;
 };
 
 class BattleDecorator : public Warrior {
-private:
-    Warrior* unit;
 public:
-    BattleDecorator(Warrior* _unit);
+    BattleDecorator(Warrior* _unit, int _target);
     void update() override {};
 };
 
@@ -119,20 +116,11 @@ public:
     Distance* create_distance(const string _name);
 };
 
-class Barracks {
+class Army {
 public:
-    ~Barracks();
-
-    vector<Infantry*> infantry;
-    vector<Distance*> distance;
-    vector<Hero*> heroes;
-
+    ~Army();
+    vector<Warrior*> units;
     void add_infantry(ArmyFactory* factory, const string _name, int& money);
     void add_distance(ArmyFactory* factory, const string _name, int& money);
     void add_hero(HeroManager* manager, const string _name, int& money);
-};
-
-class Army {
-public:
-    vector<Warrior*> unit;
 };

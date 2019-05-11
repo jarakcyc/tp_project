@@ -4,6 +4,15 @@
 
 using namespace std;
 
+Warrior::Warrior(string _name, warrior_type _type, int _health, int _max_health, int _damage, int _cost) :
+    name(_name),
+    type(_type),
+    max_health(_max_health),
+    health(_health),
+    damage(_damage),
+    cost(_cost)
+{}
+
 Warrior::Warrior(string _name, warrior_type _type, int _health, int _damage, int _cost) :
     name(_name),
     type(_type),
@@ -15,8 +24,9 @@ Warrior::Warrior(string _name, warrior_type _type, int _health, int _damage, int
 
 void Warrior::info() const {
     cout << "{name: " << name << "; ";
-    cout << " health: " << health << "; ";
-    cout << " damage: " << damage << "}" << endl;
+    cout << "health: " << health << "; ";
+    cout << "damage: " << damage << "; ";
+    cout << "target: " << target << "}" << endl;
 }
 
 void Warrior::accept(Item* item) {
@@ -100,34 +110,33 @@ Hero* HeroManager::create_hero() {
     return hero;
 }
 
-// Barracks
-void Barracks::add_infantry(ArmyFactory* factory, const string _name, int& money) {
+void Army::add_infantry(ArmyFactory* factory, const string _name, int& money) {
     Infantry* unit = factory->create_infantry(_name);
     if (unit == nullptr) {
         return;
     }
     if (money >= unit->cost) {
         money -= unit->cost;
-        infantry.push_back(unit);
+        units.push_back(unit);
     } else {
         delete unit;
     }
 }
 
-void Barracks::add_distance(ArmyFactory* factory, const string _name, int& money) {
+void Army::add_distance(ArmyFactory* factory, const string _name, int& money) {
     Distance* unit = factory->create_distance(_name);
     if (unit == nullptr) {
         return;
     }
     if (money >= unit->cost) {
         money -= unit->cost;
-        distance.push_back(unit);
+        units.push_back(unit);
     } else {
         delete unit;
     }
 }
 
-void Barracks::add_hero(HeroManager* manager, const string _name, int& money) {
+void Army::add_hero(HeroManager* manager, const string _name, int& money) {
     HeroBuilder* builder = nullptr;
     if (_name == "tank") {
         builder = new TankBuilder();
@@ -142,7 +151,7 @@ void Barracks::add_hero(HeroManager* manager, const string _name, int& money) {
         Hero* unit = manager->create_hero();
         if (money >= unit->cost) {
             money -= unit->cost;
-            heroes.push_back(unit);
+            units.push_back(unit);
         } else {
             delete unit;
         }
@@ -150,23 +159,25 @@ void Barracks::add_hero(HeroManager* manager, const string _name, int& money) {
     catch (...) {}
 }
 
-Barracks::~Barracks() {
-    for (int i = 0; i < (int)infantry.size(); ++i) {
-        delete infantry[i];
-    }
-    for (int i = 0; i < (int)distance.size(); ++i) {
-        delete distance[i];
-    }
-    for (int i = 0; i < (int)heroes.size(); ++i) {
-        delete heroes[i];
-    }
+Army::~Army() {
+    for (int i = 0; i < (int)units.size(); ++i)
+        delete units[i];
 }
 
-RelaxDecorator::RelaxDecorator(Warrior* _unit) {
-    unit = _unit;
-    unit->in_battle = false;
+RelaxDecorator::RelaxDecorator(Warrior* unit) :
+    Warrior(unit->name, unit->type, unit->health, unit->max_health, unit->damage, unit->cost)
+{
+    //in_battle = false;
+    target = -1;
 }
 
 void RelaxDecorator::update() {
-    unit->health = max(unit->health + 50, unit->max_health);
+    health = max(health + 50, max_health);
+}
+
+BattleDecorator::BattleDecorator(Warrior* unit, int _target) :
+    Warrior(unit->name, unit->type, unit->health, unit->max_health, unit->damage, unit->cost)
+{
+    //in_battle = true;
+    target = _target;
 }

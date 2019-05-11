@@ -23,9 +23,6 @@ target_link_libraries(gameplay horde)
 target_link_libraries(gameplay aliance)
 
 target_link_libraries(main gameplay)
-#target_link_libraries(main army)
-#target_link_libraries(main horde)
-#target_link_libraries(main aliance)
 
 #---------------------GTEST-------------------------------
 
@@ -38,10 +35,8 @@ if (BUILD_TESTS)
 	set(SOURCE_EXE tests.cpp)
 
 	add_executable(tests ${SOURCE_EXE})
-
-	target_link_libraries(tests army)
-	target_link_libraries(tests horde)
-	target_link_libraries(tests aliance)
+	
+	target_link_libraries(tests gameplay)
 	
 	#target_link_libraries(tests ${GTEST_LIBRARIES} pthread)
 	target_link_libraries(tests gtest gtest_main)
