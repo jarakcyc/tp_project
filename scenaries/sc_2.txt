@@ -1,0 +1,41 @@
+2
+H
+A
+castle
+monay
+money
+mk i Orc
+info
+info all
+atk 0 0
+info all
+atk 0 1
+info all
+pass
+mk h damager
+castle
+def -
+catle 
+castle
+info en
+info all
+pass
+info all
+mk h heal
+info all
+atk 1 1
+info all
+pass
+step of 1 player
+info en
+pass  
+info all
+info en
+def 0
+info en
+info all
+def -
+castle
+info all
+pass
+info all

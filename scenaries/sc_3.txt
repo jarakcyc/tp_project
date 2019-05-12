@@ -1,0 +1,15 @@
+2
+H
+A
+mk i Orc
+atk 0 1
+pass
+mk h damager
+def -
+pass
+mk h heal
+atk 1 1
+pass
+def 0
+def 0
+pass
