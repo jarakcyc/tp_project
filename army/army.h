@@ -19,13 +19,13 @@ class Warrior {
 public:
     Warrior() {};
     virtual ~Warrior() {};
-    Warrior(string _name, warrior_type _type, int _health, int _mah_health, int _damage, int _cost);
-    Warrior(string _name, warrior_type _type, int _health, int _damage, int _cost);
+    Warrior(const string& _name, const warrior_type& _type, const int& _health, const int& _mah_health, const int& _damage, const int& _cost);
+    Warrior(const string& _name, const warrior_type& _type, const int& _health, const int& _damage, const int& _cost);
 
     virtual void info() const;
     virtual void update() {};
 
-    void accept(Item* item);
+    void accept(Item*& item);
 
     string name;
     warrior_type type;
@@ -54,22 +54,20 @@ public:
 
 class Infantry : public Warrior {
 public:
-    Infantry(string _name, int _health, int _damage);
+    Infantry(const string& _name, const int& _health, const int& _damage);
 };
 
 class Distance : public Warrior {
 public:
-    Distance(string _name, int _health, int _damage);
+    Distance(const string& _name, const int& _health, const int& _damage);
 };
 
 // Hero
 
 class Hero : public Warrior {
 public:
-    Hero(string _name, int _health, int _damage);
+    Hero(const string& _name, const int& _health, const int& _damage);
     ~Hero();
-    //Item* weapon = nullptr;
-    //Item* accessory = nullptr;
 };
 
 class HeroBuilder {
@@ -115,15 +113,15 @@ public:
     ~ArmyFactory() {}
     vector<Infantry> i_list;
     vector<Distance> d_list;
-    Infantry* create_infantry(const string _name);
-    Distance* create_distance(const string _name);
+    Infantry* create_infantry(const string& _name);
+    Distance* create_distance(const string& _name);
 };
 
 class Army {
 public:
     ~Army();
     vector<Warrior*> units;
-    void add_infantry(ArmyFactory* factory, const string _name, int& money);
-    void add_distance(ArmyFactory* factory, const string _name, int& money);
-    void add_hero(HeroManager* manager, const string _name, int& money);
+    void add_infantry(ArmyFactory*& factory, const string& _name, int& money);
+    void add_distance(ArmyFactory*& factory, const string& _name, int& money);
+    void add_hero(HeroManager*& manager, const string& _name, int& money);
 };

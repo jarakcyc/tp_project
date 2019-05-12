@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Warrior::Warrior(string _name, warrior_type _type, int _health, int _max_health, int _damage, int _cost) :
+Warrior::Warrior(const string& _name, const warrior_type& _type, const int& _health, const int& _max_health, const int& _damage, const int& _cost) :
     name(_name),
     type(_type),
     max_health(_max_health),
@@ -13,7 +13,7 @@ Warrior::Warrior(string _name, warrior_type _type, int _health, int _max_health,
     cost(_cost)
 {}
 
-Warrior::Warrior(string _name, warrior_type _type, int _health, int _damage, int _cost) :
+Warrior::Warrior(const string& _name, const warrior_type& _type, const int& _health, const int& _damage, const int& _cost) :
     name(_name),
     type(_type),
     max_health(_health),
@@ -29,23 +29,23 @@ void Warrior::info() const {
     cout << "target: " << target << "}" << endl;
 }
 
-void Warrior::accept(Item* item) {
+void Warrior::accept(Item*& item) {
     item->visit(this);
 }
 
-Infantry::Infantry(string _name, int _health, int _damage) :
+Infantry::Infantry(const string& _name, const int& _health, const int& _damage) :
     Warrior(_name, warrior_type::INFANTRY, _health, _damage, 100)
 {}
 
-Distance::Distance(string _name, int _health, int _damage) :
+Distance::Distance(const string& _name, const int& _health, const int& _damage) :
     Warrior(_name, warrior_type::DISTANCE, _health, _damage, 200)
 {}
 
-Hero::Hero(string _name, int _health, int _damage) :
+Hero::Hero(const string& _name, const int& _health, const int& _damage) :
     Warrior(_name, warrior_type::HERO, _health, _damage, 1000)
 {}
 
-Infantry* ArmyFactory::create_infantry(const string _name) {
+Infantry* ArmyFactory::create_infantry(const string& _name) {
     Infantry* unit = nullptr;
 
     for (int i = 0; i < (int)i_list.size(); ++i) {
@@ -61,7 +61,7 @@ Infantry* ArmyFactory::create_infantry(const string _name) {
     return unit;
 }
 
-Distance* ArmyFactory::create_distance(const string _name) {
+Distance* ArmyFactory::create_distance(const string& _name) {
     Distance* unit = nullptr;
 
     for (int i = 0; i < (int)d_list.size(); ++i) {
@@ -110,7 +110,7 @@ Hero* HeroManager::create_hero() {
     return hero;
 }
 
-void Army::add_infantry(ArmyFactory* factory, const string _name, int& money) {
+void Army::add_infantry(ArmyFactory*& factory, const string& _name, int& money) {
     Infantry* unit = factory->create_infantry(_name);
     if (unit == nullptr) {
         return;
@@ -123,7 +123,7 @@ void Army::add_infantry(ArmyFactory* factory, const string _name, int& money) {
     }
 }
 
-void Army::add_distance(ArmyFactory* factory, const string _name, int& money) {
+void Army::add_distance(ArmyFactory*& factory, const string& _name, int& money) {
     Distance* unit = factory->create_distance(_name);
     if (unit == nullptr) {
         return;
@@ -136,7 +136,7 @@ void Army::add_distance(ArmyFactory* factory, const string _name, int& money) {
     }
 }
 
-void Army::add_hero(HeroManager* manager, const string _name, int& money) {
+void Army::add_hero(HeroManager*& manager, const string& _name, int& money) {
     HeroBuilder* builder = nullptr;
     if (_name == "tank") {
         builder = new TankBuilder();
