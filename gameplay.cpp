@@ -1,5 +1,6 @@
 #include "gameplay.h"
 #include <algorithm>
+#include <cassert>
 
 void fail() {
     cout << "incorrect" << endl;
@@ -23,14 +24,15 @@ ProxyInvoker pi;
 
 void game() {
     cout << "Please enter number of players" << endl;
-    int nPlayers;
+    int nPlayers = 0;
 
-    bool ok = false;
-    while (!ok) {
-        try {
-            cin >> nPlayers;
-            ok = true;
-        } catch (...) {
+    while (1) {
+        string s;
+        cin >> s;
+        if (is_pos_int(s)) {
+            nPlayers = to_int(s);
+            break;
+        } else {
             fail();
         }
     }
@@ -111,7 +113,7 @@ void game() {
 }
 
 void funeral(int player_id, int unit_id) {
-    Warrior*& unit = armies[player_id].units[unit_id];
+    Warrior* unit = armies[player_id].units[unit_id];
 
     if (unit->target != -1) {
         int target = unit->target;
@@ -185,6 +187,8 @@ string to_str(int n) {
 }
 
 bool is_pos_int(string s) {
+    if ((int)s.size() > 8)
+        return false;
     for (char c : s) {
         if (c < '0' || c > '9')
             return false;
@@ -239,6 +243,11 @@ void AttackCommand::execute(vector<string> params) {
     }
 
     if (unit_id >= (int)armies[from_id].units.size()) {
+        fail();
+        return;
+    }
+
+    if (from_id == to_id) {
         fail();
         return;
     }
@@ -445,6 +454,8 @@ bool ProxyInvoker::parse(int player_id, string args) {
         }
     } else if (words[0] == "money" && (int)words.size() == 1) {
         cout << money[player_id] << endl;
+    } else if (words[0] == "castle" && (int)words.size() == 1) {
+        cout << castle[player_id] << endl;
     } else if (words[0] == "pass" && (int)words.size() == 1) {
         if ((int)enemies[player_id].size() > 0) {
             cout << "enemies are here!" << endl;

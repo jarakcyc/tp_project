@@ -6,7 +6,7 @@
 using namespace std;
 
 int main() {
-    //freopen("../scenaries/sc_1.txt", "rt", stdin);
+    //freopen("../scenaries/sc_2.txt", "rt", stdin);
     game();
     return 0;
 }
