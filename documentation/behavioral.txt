@@ -1,0 +1,20 @@
+Команда:
+class CreateCommand : public Command
+
+class AttackCommand : public Command
+
+class DefendCommand : public Command
+
+class RelaxCommand : public Command
+
+class InfoCommand : public Command
+
+И класс invoker, котрые исполняет команды
+
+Исходный код: gameplay.h, gameplay.cpp
+
+Виситор: у артефактов есть метод visit()
+Сделано для реализации сопсобности массового лечения и нанесения урона
+В Warrior соответственно функция accept()
+
+Исходный код: army/items.h, army/items.cpp, army/army.h, army/army.cpp

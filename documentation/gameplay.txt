@@ -1,0 +1,42 @@
+Игра расчитана на нескольких игроков
+
+Каждый на начале игры выбирает фракцию.
+
+Игроки ходят по очереди.
+
+Игра заканчивается когда остается <= 1 игрока.
+
+Далее на каждом шагу игроку предоставляются команды:
+1) mk [i/d/h] name
+mk i(infantry) name(Solier/Knight - Aliance, Orc/Tauren - Horde)
+mk d(distance) name(Mag/Priest - Aliance, Warlock/Shaman - Horde)
+mk h(hero) tank/heal/damager
+
+2) atk unit_id player_id
+послать юнита с номером unit_id в армии на игрока player_id
+
+юнит встанет в очередь на атаку к игроку player_id
+
+3) def unit_id 
+выставить юнита с unit_id против первого юнита в очереди на атаку
+
+4) rlx u_id
+отправить юнита u_id на отдых(relax)
+
+5) info [id/all/en]
+info all - вывести информацию о всех своих юнитах
+info id - у конкретного юнита
+info en - вывести очередь на атаку(очередь из противников)
+
+6) money 
+вывести количество денег
+
+7) castle 
+вывести количество здоровья у замка
+
+8) pass - пропустить ход
+
+Source: gameplay.cpp, gameplay.h
+
+Сбилдить проект: build.sh
+Запустить проект(после билда): run.sh
