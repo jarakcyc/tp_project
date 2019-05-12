@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Item::Item(Hero* _owner, const int _item_id, const string _name, const item_type _type, const string _desc) :
+Item::Item(Hero* _owner, const int& _item_id, const string& _name, const item_type& _type, const string& _desc) :
     owner(_owner),
     item_id(_item_id),
     name(_name),
@@ -24,11 +24,11 @@ void Item::info() const {
     cout << description << endl;
 }
 
-Weapon::Weapon(Hero* _owner, const int _id, const string _name, const string _desc) :
+Weapon::Weapon(Hero* _owner, const int& _id, const string& _name, const string& _desc) :
     Item(_owner, _id, _name, item_type::WEAPON, _desc)
 {}
 
-Accessory::Accessory(Hero* _owner, const int _id, const string _name, const string _desc) :
+Accessory::Accessory(Hero* _owner, const int& _id, const string& _name, const string& _desc) :
     Item(_owner, _id, _name, item_type::ACCESSORY, _desc)
 {}
 

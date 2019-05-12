@@ -15,7 +15,7 @@ enum item_type {
 
 class Item {
 public:
-    Item(Hero* _owner, const int _item_id, const string _name, const item_type _type, const string _desc);
+    Item(Hero* _owner, const int& _item_id, const string& _name, const item_type& _type, const string& _desc);
     virtual ~Item() {};
 
     Hero* owner;
@@ -33,12 +33,12 @@ public:
 
 class Weapon : public Item {
 public:
-    Weapon(Hero* _owner, const int _id, const string _name, const string _desc);
+    Weapon(Hero* _owner, const int& _id, const string& _name, const string& _desc);
 };
 
 class Accessory : public Item {
 public:
-    Accessory(Hero* _owner, const int _id, const string _name, const string _desc);
+    Accessory(Hero* _owner, const int& _id, const string& _name, const string& _desc);
 };
 
 
