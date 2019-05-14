@@ -112,7 +112,7 @@ void game() {
     cout << "Game over" << endl;
 }
 
-void funeral(int player_id, int unit_id) {
+void funeral(const int& player_id, const int& unit_id) {
     Warrior* unit = armies[player_id].units[unit_id];
 
     if (unit->target != -1) {
@@ -124,7 +124,7 @@ void funeral(int player_id, int unit_id) {
     delete unit;
 }
 
-void initialize(int nPlayers) {
+void initialize(const int& nPlayers) {
     HordeFactory = new HordeArmyFactory();
     AlianceFactory = new AlianceArmyFactory();
     manager = new HeroManager();
@@ -138,7 +138,7 @@ void initialize(int nPlayers) {
     init_factories(nPlayers);
 }
 
-void init_factories(int nPlayers) {
+void init_factories(const int& nPlayers) {
     for (int i = 0; i < nPlayers; ++i) {
         cout << i << " player's step" << endl;
         cout << "Please chose your faraction A or H(Aliance/Horde)" << endl;
@@ -200,12 +200,12 @@ void Invoker::set_command(Command* _command) {
     command = _command;
 }
 
-void Invoker::exec_command(vector<string> params) {
+void Invoker::exec_command(const vector<string>& params) {
     command->execute(params);
     delete command;
 }
 
-void CreateCommand::execute(vector<string> params) {
+void CreateCommand::execute(const vector<string>& params) {
     int player_id = to_int(params[0]);
     string type = params[1];
     string name = params[2];
@@ -224,7 +224,7 @@ void CreateCommand::execute(vector<string> params) {
     }
 }
 
-void AttackCommand::execute(vector<string> params) {
+void AttackCommand::execute(const vector<string>& params) {
     for (int i = 1; i < 3; ++i) {
         if (!is_pos_int(params[i])) {
             fail();
@@ -268,7 +268,7 @@ void AttackCommand::execute(vector<string> params) {
     }
 }
 
-void DefendCommand::execute(vector<string> params) {
+void DefendCommand::execute(const vector<string>& params) {
     int player_id = to_int(params[0]);
     int unit_id = to_int(params[1]);
 
@@ -327,7 +327,7 @@ void DefendCommand::execute(vector<string> params) {
     }
 }
 
-void RelaxCommand::execute(vector<string> params) {
+void RelaxCommand::execute(const vector<string>& params) {
     int player_id = to_int(params[0]);
 
     if (!is_pos_int(params[1])) {
@@ -357,7 +357,7 @@ void RelaxCommand::execute(vector<string> params) {
     }
 }
 
-void InfoCommand::execute(vector<string> params) {
+void InfoCommand::execute(const vector<string>& params) {
     int player_id = to_int(params[0]);
     string option = params[1];
 
@@ -383,7 +383,7 @@ void InfoCommand::execute(vector<string> params) {
     }
 }
 
-vector<string> ProxyInvoker::get_words(string args) {
+vector<string> ProxyInvoker::get_words(const string& args) {
     vector<string> words;
 
     string cur = "";
@@ -404,7 +404,7 @@ vector<string> ProxyInvoker::get_words(string args) {
 }
 
 
-bool ProxyInvoker::parse(int player_id, string args) {
+bool ProxyInvoker::parse(const int& player_id, const string& args) {
     vector<string> words = get_words(args);
 
     if ((int)words.size() == 0) {

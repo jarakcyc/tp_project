@@ -13,47 +13,47 @@ void fail();
 
 void game();
 
-int to_int(const string s);
-string to_str(const int n);
+int to_int(string s);
+string to_str(int n);
 bool is_pos_int(string s);
 
-void initialize(int nPlayers);
+void initialize(const int& nPlayers);
 
-void init_factories(int nPlayers);
+void init_factories(const int& nPlayers);
 
 void battle(Warrior* w1, Warrior* w2);
 
-void funeral(int player_id, int unit_id);
+void funeral(const int& player_id, const int& unit_id);
 
 class Command {
 public:
     virtual ~Command() {};
-    virtual void execute(vector<string> params) {};
+    virtual void execute(const vector<string>& params) {};
 };
 
 class CreateCommand : public Command {
 public:
-    void execute(vector<string> params) override;
+    void execute(const vector<string>& params) override;
 };
 
 class AttackCommand : public Command {
 public:
-    void execute(vector<string> params) override;
+    void execute(const vector<string>& params) override;
 };
 
 class DefendCommand : public Command {
 public:
-    void execute(vector<string> params) override;
+    void execute(const vector<string>& params) override;
 };
 
 class RelaxCommand : public Command {
 public:
-    void execute(vector<string> params) override;
+    void execute(const vector<string>& params) override;
 };
 
 class InfoCommand : public Command {
 public:
-    void execute(vector<string> params) override;
+    void execute(const vector<string>& params) override;
 };
 
 class Invoker {
@@ -63,7 +63,7 @@ public:
     virtual ~Invoker() {};
 
     virtual void set_command(Command* _command);
-    virtual void exec_command(vector<string> params);
+    virtual void exec_command(const vector<string>& params);
 };
 
 class ProxyInvoker : public Invoker {
@@ -73,9 +73,6 @@ public:
     ProxyInvoker() {invoker = new Invoker();}
     ~ProxyInvoker() {delete invoker;}
 
-    vector<string> get_words(string s);
-    bool parse(int player_id, string args);
-
-    void set_command(Command* _command) override {};
-    void exec_command(vector<string> params) override {};
+    vector<string> get_words(const string& s);
+    bool parse(const int& player_id, const string& args);
 };
